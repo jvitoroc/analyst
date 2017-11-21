@@ -12,7 +12,6 @@ function RepositoryList(props){
                     issues={e.open_issues_count} key={i} />
         });
     }
-
     return (
         <ul className="repository-list">
             {renderRepos()}

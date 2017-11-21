@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 function SearchBox(props){
     return(
         <div className="search-box container">
-            <form onSubmit={props.getRepositories}>
+            <form onSubmit={props.handleClick}>
                 <div className="form-row">
                     <div className="col-9 col-sm-10">
                         <input type="text" onChange={props.handleChange} className="form-control" placeholder="Repository name"/>
@@ -17,7 +17,7 @@ function SearchBox(props){
 }
 
 SearchBox.propTypes = {
-    getRepositories: PropTypes.func.isRequired,
+    handleClick: PropTypes.func.isRequired,
     handleChange: PropTypes.func.isRequired
 };
 
