@@ -5,10 +5,9 @@ import RepositoryList from "./RepositoryList";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
 
-class RepositoriesContainer extends React.Component{
-
-    branchRender(){
-        let data = this.props.data;
+function RepositoriesContainer(props){
+    let branchRender = ()=>{
+        let data = props.data;
 
         if(data.status === 'loading')
             return <Loading />
@@ -18,15 +17,13 @@ class RepositoriesContainer extends React.Component{
             return <Message value={"Pick a repository!"} />
 
         return <RepositoryList repos={data.repos} />
-    }
+    };
 
-    render(){
-        return(
-            <div className="repos container">
-                {this.branchRender()}
-            </div>
-        );
-    }
+    return(
+        <div className="repos container">
+            {branchRender()}
+        </div>
+    );
 }
 
 RepositoriesContainer.propTypes = {
