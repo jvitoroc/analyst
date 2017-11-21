@@ -1,0 +1,63 @@
+body{
+    overflow-x: hidden;
+}
+
+.header{
+    background: #0277BD;
+    color: #fff;
+    padding: 100px 0 50px 0;
+}
+
+.search-box{
+    margin-top: 20px;
+}
+
+.repos .repository-list{
+    list-style-type: none;
+    padding: 40px 0;
+}
+
+.message-wrap{
+    margin-top: 100px;
+}
+
+.message-wrap h3{
+    text-align: center;
+}
+
+.repos .repository-list > .repository{
+    border-radius: 20px;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border: 1px rgba(0, 0, 0, 0.2) solid;
+}
+
+.repos .repository-list > .repository .avatar > img{
+    max-width: 80px;
+    min-width: 60px;
+}
+
+.repos .repository-list > .repository .desc{
+    word-break: break-all;
+}
+
+.hightlight{
+    font-weight: bold;
+}
+
+@media screen and (max-width: 575px){
+    .repos .repository-list > .repository .avatar > img{
+        padding: 10px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .repos .repository-list > .repository .desc{
+        text-align: center;
+    }
+
+    .repos .repository-list > .repository .desc .title{
+        font-size: 1.5em;
+    }
+}
