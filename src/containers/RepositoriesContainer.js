@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import RepositoryList from "./RepositoryList";
 import Message from "../components/Message";
@@ -26,6 +27,10 @@ class RepositoriesContainer extends React.Component{
             </div>
         );
     }
+}
+
+RepositoriesContainer.propTypes = {
+    data: PropTypes.object.isRequired
 }
 
 export default RepositoriesContainer;

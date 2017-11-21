@@ -66,9 +66,11 @@ class Main extends React.Component{
         return(
             <div className="wrap">
                 <Header />
+
                 <SearchBox
                 handleClick={this.getRepositories}
                 handleChange={this.handleChange} />
+
                 <RepositoriesContainer data={this.state.data} />
             </div>
         );
