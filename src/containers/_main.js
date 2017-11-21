@@ -2,10 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import PropTypes from "prop-types";
 
-import RepositoryList from './RepositoryList';
+import RepositoriesContainer from './RepositoriesContainer';
 import SearchBox from '../components/SearchBox';
-import Message from "../components/Message";
-import Loading from "../components/Loading";
 import Header from "../components/Header";
 
 import extractValue from "../utils/extractValue";
@@ -15,10 +13,11 @@ class Main extends React.Component{
         super(props);
 
         this.state = {
-            repos:null,
             value: '',
-            gettingRepos: false,
-            justMounted: true
+            data: {
+                status: 'mounted',
+                repos: null
+            }
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -26,38 +25,34 @@ class Main extends React.Component{
     }
 
     getRepositories(e){ //Get 10 repositories from GitHub
-        this.setState({gettingRepos: true, justMounted: false});
+        this.setState({data: {status: 'loading', repos: null}});
         let that = this;
-        setTimeout(()=>{
-            axios.get(`https://api.github.com/search/repositories?q=${this.state.value}&per_page=${this.props.repositoryListLength}&client_id=085153c53d393d9f0d9c`)
-            .then(function (response) {
-                if(response.data.total_count && response.data.total_count !== 0)
-                    that.repositoriesReceived(response.data);
-                else
-                    that.repositoriesReceived(false);
-            })
-            .catch(function (error) {
-                    that.repositoriesReceived('error');
-            });
-        }, 1000);
+
+        axios.get(`https://api.github.com/search/repositories?q=${this.state.value}&per_page=${this.props.repositoryListLength}&client_id=085153c53d393d9f0d9c`)
+        .then(function (response) {
+            if(response.data.total_count && response.data.total_count !== 0)
+                that.setState({data: {
+                        status: 'success',
+                        repos: response.data.items
+                    }
+                });
+            else
+                that.setState({data: {
+                        status: 'none',
+                        repos: null
+                    }
+                });
+        })
+        .catch(function (error) {
+                that.setState({data: {
+                        status: 'error',
+                        repos: null
+                    }
+                });
+        });
 
         e.preventDefault();
-    }
-
-    repositoriesReceived(data){
-        this.setState({repos:data, gettingRepos: false});
-    }
-
-    branchRender(){
-        if(this.state.gettingRepos){
-            return <Loading />
-        }else{
-            if(this.state.repos === 'error' || this.state.repos === false){
-                return <Message value={"No repositories found!"} />
-            }else{
-                return <RepositoryList repos={this.state.repos.items} />
-            }
-        }
+        return false;
     }
 
     handleChange(e){ //Get the value (name of repository) from the input-text
@@ -69,13 +64,9 @@ class Main extends React.Component{
             <div className="wrap">
                 <Header />
                 <SearchBox
-                getRepositories={this.getRepositories}
+                handleClick={this.getRepositories}
                 handleChange={this.handleChange} />
-
-                {this.state.justMounted
-                    ? <Message value={"Pick a repository!"} />
-                    : this.branchRender()
-                }
+                <RepositoriesContainer data={this.state.data} />
             </div>
         );
     }
