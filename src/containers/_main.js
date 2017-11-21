@@ -6,6 +6,7 @@ import RepositoryList from './RepositoryList';
 import SearchBox from '../components/SearchBox';
 import Message from "../components/Message";
 import Loading from "../components/Loading";
+import Header from "../components/Header";
 
 import extractValue from "../utils/extractValue";
 
@@ -65,7 +66,8 @@ class Main extends React.Component{
 
     render(){
         return(
-            <div className="main">
+            <div className="wrap">
+                <Header />
                 <SearchBox
                 getRepositories={this.getRepositories}
                 handleChange={this.handleChange} />
