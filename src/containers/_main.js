@@ -22,40 +22,48 @@ class Main extends React.Component{
 
         this.handleChange = this.handleChange.bind(this);
         this.getRepositories = this.getRepositories.bind(this);
+        this.repositoriesReceivedHandler = this.repositoriesReceivedHandler.bind(this);
+        this.repositoriesErrorHandler = this.repositoriesErrorHandler.bind(this);
     }
 
     getRepositories(e){ //Get 10 repositories from GitHub
         this.setState({data: {status: 'loading', repos: null}});
-        let that = this;
+
         let url = `https://api.github.com/search/repositories?` +
                     `q=${this.state.value}&` +
                     `per_page=${this.props.repositoryListLength}&` +
-                    `client_id=085153c53d393d9f0d9c`
+                    `client_id=085153c53d393d9f0d9c`;
+
         axios.get(url)
-        .then(function (response) {
-            if(response.data.total_count && response.data.total_count !== 0)
-                that.setState({data: {
-                        status: 'success',
-                        repos: response.data.items
-                    }
-                });
-            else
-                that.setState({data: {
-                        status: 'none',
-                        repos: null
-                    }
-                });
-        })
-        .catch(function (error) {
-                that.setState({data: {
-                        status: 'error',
-                        repos: null
-                    }
-                });
-        });
+        .then(this.repositoriesReceivedHandler)
+        .catch(this.repositoriesErrorHandler);
 
         e.preventDefault();
         return false;
+    }
+
+    repositoriesReceivedHandler(response){
+        if(response.data.total_count && response.data.total_count !== 0)
+            this.setState({data: {
+                    status: 'success',
+                    repos: response.data.items
+                }
+            });
+        else
+            this.setState({data: {
+                    status: 'none',
+                    repos: null
+                }
+            });
+    }
+
+    repositoriesErrorHandler(err){
+        // treat error
+        this.setState({data: {
+                status: 'error',
+                repos: null
+            }
+        });
     }
 
     handleChange(e){ //Get the value (name of repository) from the input-text
