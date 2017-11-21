@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 
 import RepositoryList from './RepositoryList';
 import SearchBox from '../components/SearchBox';
-import Message from "./Message";
+import Message from "../components/Message";
+import Loading from "../components/Loading";
 
 import extractValue from "../utils/extractValue";
 
@@ -48,10 +49,10 @@ class Main extends React.Component{
 
     branchRender(){
         if(this.state.gettingRepos){
-            return Message.LoadingComponent;
+            return <Loading />
         }else{
             if(this.state.repos === 'error' || this.state.repos === false){
-                return Message.NotFoundComponent
+                return <Message value={"No repositories found!"} />
             }else{
                 return <RepositoryList repos={this.state.repos.items} />
             }
@@ -70,7 +71,7 @@ class Main extends React.Component{
                 handleChange={this.handleChange} />
 
                 {this.state.justMounted
-                    ? Message.StartingComponent
+                    ? <Message value={"Pick a repository!"} />
                     : this.branchRender()
                 }
             </div>

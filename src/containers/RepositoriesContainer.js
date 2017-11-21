@@ -7,7 +7,9 @@ class RepositoriesContainer extends React{
 
     render(){
         return(
-            <RepositoryList>
+            <div className="repos container">
+                
+            </div>
         );
     }
 }
