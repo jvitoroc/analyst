@@ -15,7 +15,7 @@ class Main extends React.Component{
         super(props);
 
         this.state = {
-            repos:null,
+            repos: null,
             value: '',
             gettingRepos: false,
             justMounted: true
@@ -28,8 +28,13 @@ class Main extends React.Component{
     getRepositories(e){ //Get 10 repositories from GitHub
         this.setState({gettingRepos: true, justMounted: false});
         let that = this;
+        let url = `https://api.github.com/search/repositories?` +
+                    `q=${this.state.value}&` +
+                    `per_page=${this.props.repositoryListLength}&` +
+                    `client_id=085153c53d393d9f0d9c`
+
         setTimeout(()=>{
-            axios.get(`https://api.github.com/search/repositories?q=${this.state.value}&per_page=${this.props.repositoryListLength}&client_id=085153c53d393d9f0d9c`)
+            axios.get(url)
             .then(function (response) {
                 if(response.data.total_count && response.data.total_count !== 0)
                     that.repositoriesReceived(response.data);

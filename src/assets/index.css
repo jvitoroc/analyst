@@ -17,11 +17,11 @@ body{
     padding: 40px 0;
 }
 
-.message-wrap{
+.repos .message-wrap{
     margin-top: 100px;
 }
 
-.message-wrap h3{
+.repos .message-wrap h3{
     text-align: center;
 }
 

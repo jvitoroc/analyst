@@ -14,11 +14,9 @@ function RepositoryList(props){
     }
 
     return (
-        <div className="repos container">
-            <ul className="repository-list clearfix">
-                {renderRepos()}
-            </ul>
-        </div>
+        <ul className="repository-list">
+            {renderRepos()}
+        </ul>
     );
 }
 
