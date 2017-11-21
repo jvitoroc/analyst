@@ -5,7 +5,18 @@ import RepositoryList from "./RepositoryList";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
 
+import {getAnalyzedData} from "../utils/analyze";
+
 function RepositoriesContainer(props){
+
+    let analyzeRepo = (fullname)=>{
+        getAnalyzedData(fullname).then((response)=>{
+            console.log(response);
+        }).catch((err)=>{
+            console.log(err instanceof Error);
+        });
+    }
+
     let branchRender = ()=>{
         let data = props.data;
 
@@ -16,7 +27,9 @@ function RepositoriesContainer(props){
         if(data.status === 'mounted')
             return <Message value={"Pick a repository!"} />
 
-        return <RepositoryList repos={data.repos} />
+        return <RepositoryList
+                analyze={analyzeRepo}
+                repos={data.repos} />
     };
 
     return(

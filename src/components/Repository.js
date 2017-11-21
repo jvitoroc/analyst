@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 function Repository(props){
     return(
-        <li className="repository container">
+        <li onClick={props.onClick} className="repository container">
             <div className="row">
                 <div className="avatar col-12 col-sm-2 d-flex align-items-center"><img className="img-fluid" src={props.avatar_url} alt={props.full_name}/></div>
                 <div className="desc col-12 col-sm-10">
