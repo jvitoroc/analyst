@@ -2,23 +2,35 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import RepositoryList from "./RepositoryList";
+import AnalysisResult from "./AnalysisResult";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
 
 import {getAnalyzedData} from "../utils/analyze";
 
-function RepositoriesContainer(props){
+class RepositoriesContainer extends React.Component{
+    constructor(props){
+        super(props);
 
-    let analyzeRepo = (fullname)=>{
+        this.state = {
+            showAnalysis: false,
+            analysisData: null
+        }
+
+        this.analyzeRepo = this.analyzeRepo.bind(this);
+    }
+
+    analyzeRepo(fullname){
+        let that = this;
         getAnalyzedData(fullname).then((response)=>{
-            console.log(response);
+            that.setState({showAnalysis: true, analysisData: response});
         }).catch((err)=>{
-            console.log(err instanceof Error);
+            that.setState({showAnalysis: true, analysisData: false});
         });
     }
 
-    let branchRender = ()=>{
-        let data = props.data;
+    branchRender(){
+        let data = this.props.data;
 
         if(data.status === 'loading')
             return <Loading />
@@ -28,15 +40,20 @@ function RepositoriesContainer(props){
             return <Message value={"Pick a repository!"} />
 
         return <RepositoryList
-                analyze={analyzeRepo}
+                analyze={this.analyzeRepo}
                 repos={data.repos} />
     };
 
-    return(
-        <div className="repos container">
-            {branchRender()}
-        </div>
-    );
+    render(){
+        return(
+            <div className="repos container">
+                {this.state.showAnalysis
+                    ? <AnalysisResult data={this.state.analysisData} />
+                    : this.branchRender()
+                }
+            </div>
+        );
+    }
 }
 
 RepositoriesContainer.propTypes = {
