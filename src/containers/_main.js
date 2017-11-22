@@ -4,8 +4,10 @@ import PropTypes from "prop-types";
 
 import RepositoriesContainer from './RepositoriesContainer';
 import SearchBox from '../components/SearchBox';
+import AnalysisResult from "./AnalysisResult";
 import Header from "../components/Header";
 
+import {getAnalyzedData} from "../utils/analyze";
 import extractValue from "../utils/extractValue";
 
 class Main extends React.Component{
@@ -14,6 +16,7 @@ class Main extends React.Component{
 
         this.state = {
             value: '',
+            showAnalysis: false,
             data: {
                 status: 'mounted',
                 repos: null
@@ -24,10 +27,11 @@ class Main extends React.Component{
         this.getRepositories = this.getRepositories.bind(this);
         this.repositoriesReceivedHandler = this.repositoriesReceivedHandler.bind(this);
         this.repositoriesErrorHandler = this.repositoriesErrorHandler.bind(this);
+        this.analyzeRepo = this.analyzeRepo.bind(this);
     }
 
     getRepositories(e){ //Get 10 repositories from GitHub
-        this.setState({data: {status: 'loading', repos: null}});
+        this.setState({showAnalysis: false, analysisData: null, data: {status: 'loading', repos: null}});
 
         let url = `https://api.github.com/search/repositories?` +
                     `q=${this.state.value}&` +
@@ -45,10 +49,10 @@ class Main extends React.Component{
     repositoriesReceivedHandler(response){
         if(response.data.total_count && response.data.total_count !== 0)
             this.setState({data: {
-                    status: 'success',
-                    repos: response.data.items
-                }
-            });
+                status: 'success',
+                repos: response.data.items
+            }
+        });
         else
             this.setState({data: {
                     status: 'none',
@@ -70,6 +74,29 @@ class Main extends React.Component{
       this.setState({value: extractValue(e.target.value)});
     }
 
+    analyzeRepo(fullname){
+        let that = this;
+        getAnalyzedData(fullname).then((response)=>{
+            that.setState({
+                showAnalysis: true,
+                analysisData: response,
+                data: {
+                    status: 'mounted',
+                    repos: null
+                }
+            });
+        }).catch((err)=>{
+            that.setState({
+                showAnalysis: true,
+                analysisData: null,
+                data: {
+                    status: 'mounted',
+                    repos: null
+                }
+            });
+        });
+    }
+
     render(){
         return(
             <div className="wrap">
@@ -79,7 +106,10 @@ class Main extends React.Component{
                 handleClick={this.getRepositories}
                 handleChange={this.handleChange} />
 
-                <RepositoriesContainer data={this.state.data} />
+                {!this.state.showAnalysis ?
+                    <RepositoriesContainer data={this.state.data} analyzeRepo={this.analyzeRepo} />
+                    : <AnalysisResult data={this.state.analysisData} />
+                }
             </div>
         );
     }

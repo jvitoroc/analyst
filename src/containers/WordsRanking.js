@@ -7,10 +7,7 @@ function WordsRanking(props){
     let renderRank = ()=>{
         return props.words.map((e, i)=>{
             return(
-                <li key={i}>
-                    <span className="hightlight word">{e[0]}</span>
-                    <span className="times"> {e[1]} times used</span>
-                </li>
+                <Word key={i} title={e[0]} times={e[1]} />
             );
         });
     }

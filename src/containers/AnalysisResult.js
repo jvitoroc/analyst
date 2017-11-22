@@ -12,9 +12,11 @@ class AnalysisResult extends React.Component{
             return <Message value={"An error occurred trying to analyze data!"} />
         }else{
             return (
-                <div className="row analyzed-data">
-                    <WordsRanking words={data.topTenWords} />
-                    <MostCommonIssue issue={data.mostCommonIssue} />
+                <div className="container repos">
+                    <div className="row analyzed-data">
+                        <WordsRanking words={data.topTenWords} />
+                        <MostCommonIssue issue={data.mostCommonIssue} />
+                    </div>
                 </div>
             )
         }
