@@ -54,6 +54,7 @@ function rankWordOccurrences(dict){
 
 function getTheMostCommonIssueTitle(titles){
     let best = {title: "", totalRating: 0};
+    console.log(titles);
     for(let title of titles){
         let totalRating = sumSimilarityRatings(stringSimilarity.findBestMatch(title, titles).ratings);
         if(totalRating > best.totalRating){
@@ -73,6 +74,7 @@ function sumSimilarityRatings(ratings){
 }
 
 function refactorTitles(issues){
+    console.log(issues);
     let titles = [];
     for(let issue of issues){
         titles.push(issue.title);

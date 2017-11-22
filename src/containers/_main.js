@@ -31,7 +31,14 @@ class Main extends React.Component{
     }
 
     getRepositories(e){ //Get 10 repositories from GitHub
-        this.setState({showAnalysis: false, analysisData: null, data: {status: 'loading', repos: null}});
+        this.setState({
+            showAnalysis: false,
+            analysisData: null,
+            data: {
+                status: 'loading',
+                repos: null
+            }
+        });
 
         let url = `https://api.github.com/search/repositories?` +
                     `q=${this.state.value}&` +
