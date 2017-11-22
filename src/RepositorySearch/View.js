@@ -24,7 +24,9 @@ function View(props){
     return (
         <div className="main">
             <SearchInput onSearch={props.onSearch}  />
-            {render()}
+            <div className="container">
+                {render()}
+            </div>
         </div>
     );
 };

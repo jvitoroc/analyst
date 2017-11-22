@@ -1,6 +1,6 @@
 import React from "react";
 import View from "./View";
-import getData from "./getData";
+import getData from "./utils/getData";
 
 export default class extends React.Component{
     constructor(props){
