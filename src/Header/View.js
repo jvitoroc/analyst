@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-function Header(){
-    return(
+export default function View(){
+    return (
         <div className="header">
             <div className="container">
                 <h1>Issues Analyst</h1>
@@ -9,6 +9,4 @@ function Header(){
             </div>
         </div>
     );
-}
-
-export default Header;
+};

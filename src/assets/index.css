@@ -6,7 +6,7 @@ body{
     margin-top: 40px;
 }
 
-.most-used-words > .word-list{
+.most-used-words .word-list{
     list-style-type: decimal;
 }
 
@@ -26,24 +26,24 @@ body{
     padding: 100px 0 50px 0;
 }
 
-.search-box{
+.search-input{
     margin-top: 20px;
 }
 
-.repos .repository-list{
+.main .repository-list{
     list-style-type: none;
     padding: 40px 0;
 }
 
-.repos .message-wrap{
+.main .message-wrap{
     margin-top: 100px;
 }
 
-.repos .message-wrap h3{
+.main .message-wrap h3{
     text-align: center;
 }
 
-.repos .repository-list > .repository{
+.main .repository-list > .repository{
     border-radius: 20px;
     padding: 15px;
     margin-bottom: 10px;
@@ -51,12 +51,12 @@ body{
     border: 1px rgba(0, 0, 0, 0.2) solid;
 }
 
-.repos .repository-list > .repository .avatar > img{
+.main .repository-list > .repository .avatar > img{
     max-width: 80px;
     min-width: 60px;
 }
 
-.repos .repository-list > .repository .desc{
+.main .repository-list > .repository .desc{
     word-break: break-all;
 }
 
@@ -65,17 +65,17 @@ body{
 }
 
 @media screen and (max-width: 575px){
-    .repos .repository-list > .repository .avatar > img{
+    .main .repository-list > .repository .avatar > img{
         padding: 10px;
         display: block;
         margin: 0 auto;
     }
 
-    .repos .repository-list > .repository .desc{
+    .main .repository-list > .repository .desc{
         text-align: center;
     }
 
-    .repos .repository-list > .repository .desc .title{
+    .main .repository-list > .repository .desc .title{
         font-size: 1.5em;
     }
 }

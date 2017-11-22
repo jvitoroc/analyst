@@ -1,7 +1,7 @@
 import React from 'react';
-import '../assets/loading.css';
+import './css/loading.css';
 
-function Loading(){
+export default function Loading(){
     return(
         <div className="windows8">
             <div className="wBall" id="wBall_1">
@@ -22,5 +22,3 @@ function Loading(){
         </div>
     );
 }
-
-export default Loading;

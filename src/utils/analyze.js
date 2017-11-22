@@ -12,7 +12,7 @@ function getWords(issues){
 
 let getAnalyzedData = (repoName)=>{
     return new Promise((resolve,reject)=>{
-        axios.get(`https://api.github.com/repos/${repoName}/issues`)
+        axios.get(`https://api.github.com/repos/${repoName}/issues?state=all`)
         .then((data)=>{
             let topTenWords = getWords(data.data);
             topTenWords = getOccurrences(topTenWords);
