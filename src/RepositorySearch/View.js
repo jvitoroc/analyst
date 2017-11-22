@@ -23,7 +23,7 @@ function View(props){
 
     return (
         <div className="main">
-            <SearchInput onSearch={props.onSearch}  />
+            <SearchInput onSearch={props.pullData}  />
             <div className="container">
                 {render()}
             </div>

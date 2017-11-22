@@ -2,14 +2,14 @@ import React from "react";
 import View from "./View";
 import getData from "./utils/getData";
 
-export default class extends React.Component{
+export default class RepositorySearch extends React.Component{
     constructor(props){
         super(props);
 
-        this.load = this.load.bind(this);
+        this.pullData = this.pullData.bind(this);
     }
 
-    async load(query){
+    async pullData(query){
         try{
             this.setState({loading: true, error: false, mounted: false});
             let data = await getData(query, this.props.maxReposLength);
@@ -21,7 +21,7 @@ export default class extends React.Component{
 
     render(){
         return(
-            <View onSearch={this.load} {...this.state} />
+            <View pullData={this.pullData} {...this.state} />
         );
     }
 }

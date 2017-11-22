@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import Repository from './Repository';
+import "./css/RepositoryList.css"
 
 function RepositoryList(props){
     let renderRepos = ()=>{
