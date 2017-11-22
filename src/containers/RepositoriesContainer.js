@@ -5,8 +5,6 @@ import RepositoryList from "./RepositoryList";
 import Message from "../components/Message";
 import Loading from "../components/Loading";
 
-
-
 class RepositoriesContainer extends React.Component{
 
     branchRender(){
