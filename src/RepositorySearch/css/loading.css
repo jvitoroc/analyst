@@ -1,3 +1,7 @@
+.hidden{
+	display: none;
+}
+
 .windows8 {
 	position: relative;
 	width: 78px;
