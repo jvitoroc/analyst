@@ -3,7 +3,7 @@ import './css/Loading.css';
 
 export default function Loading(props){
     return(
-        <div className={props.hidden}>
+        <div className={props.state}>
             <div className="windows8 ">
                 <div className="wBall" id="wBall_1">
                     <div className="wInnerBall"></div>
