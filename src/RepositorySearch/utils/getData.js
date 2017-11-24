@@ -30,6 +30,8 @@ function extractRequired(response){
                 starsCount: repo.stargazers_count
             });
         }
-        resolve(items)
+        setTimeout(()=>{
+            resolve(items);
+        }, 1000);
     });
 }
