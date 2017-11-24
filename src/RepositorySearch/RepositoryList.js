@@ -5,7 +5,6 @@ import "./css/RepositoryList.css"
 
 function RepositoryList(props){
     let renderRepos = ()=>{
-        console.log(props.repos);
         return props.repos.map((e, i)=>{
             return <Repository {...e} key={i} />
         });

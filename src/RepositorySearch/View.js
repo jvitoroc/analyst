@@ -1,49 +1,25 @@
 import React from "react";
 import SearchInput from "./SearchInput";
-import Loading from "./Loading";
-import Message from "./Message";
-import RepositoryList from "./RepositoryList";
+import RepositoriesContainer from "./RepositoriesContainer";
 import PropTypes from "prop-types";
-import classnames from "classnames";
 
-function View(props){
-
-    let render = ()=>{
-        if(props.mounted)
-            return <Message value={"Pick a repository!"} />
-        else if(props.error)
-            return <Message value={"An error occurred!"} />
-        else
-            if(props.data.length !== 0)
-                return <RepositoryList repos={props.data} />
-            else
-                return <Message value={"No repositories found!"} />
-    };
-
+function View({pullData, ...otherProps}){
     return (
         <div className="main">
-            <SearchInput onSearch={props.pullData}  />
+            <SearchInput onSearch={pullData}  />
             <div className="container">
-                {props.loading
-                    ? null
-                    : render()
-                }
-                <Loading hidden={classnames({hidden: !props.loading})} />
+                <RepositoriesContainer {...otherProps} />
             </div>
         </div>
     );
 };
 
-View.defaultProps = {
-    mounted: true
-}
-
 View.propTypes = {
-    mounted: PropTypes.bool.isRequired,
+    mounted: PropTypes.bool,
     loading: PropTypes.bool,
     error: PropTypes.bool,
     data: PropTypes.array,
-    pullData: PropTypes.func.isRequired
+    pullData: PropTypes.func
 }
 
 export default View;
