@@ -22,4 +22,4 @@ export default class RepositorySearch extends React.Component{
     render(){
         return <View pullData={this.pullData} {...this.state} />
     }
-}
+};
