@@ -1,4 +1,3 @@
-import axios from "axios";
 import stringSimilarity from "string-similarity";
 
 function getWords(issues){
@@ -10,29 +9,21 @@ function getWords(issues){
     return string.match(regex);
 }
 
-let getAnalyzedData = (repoName)=>{
-    return new Promise((resolve,reject)=>{
-        axios.get(`https://api.github.com/repos/${repoName}/issues?state=all`)
-        .then((data)=>{
-            let topTenWords = getWords(data.data);
-            topTenWords = getOccurrences(topTenWords);
-            topTenWords = rankWordOccurrences(topTenWords);
-
-            let mostCommonIssue = refactorTitles(data.data);
-            mostCommonIssue = getTheMostCommonIssueTitle(mostCommonIssue);
-
-            resolve({topTenWords, mostCommonIssue});
-        }).catch((err)=>{
-            reject(err);
-        });
+let getAnalyzedData = (rawData)=>{
+    if(rawData.length === 0)
+        return true;
+    let wordRank = rankWordOccurrences(getOccurrences(getWords(rawData)));
+    let mostCommonIssue = getTheMostCommonIssueTitle(extractTitles(rawData));
+    return ({
+        wordRank,
+        mostCommonIssue
     });
-
 }
 
 function getOccurrences(words){
-    let dict = {}
+    let dict = {};
     for(let word of words){
-        if(dict.hasOwnProperty(word))
+        if(Object.prototype.hasOwnProperty.call(dict, word))
             dict[word] += 1;
         else
             dict[word] = 1;
@@ -45,7 +36,7 @@ function rankWordOccurrences(dict){
     let rank = [];
     for(let i = 0; i < 10;i++){
         let word = Object.keys(dict).reduce(function(a, b){ return dict[a] > dict[b] ? a : b });
-        rank.push([word, dict[word]]);
+        rank.push({word, occurrences: dict[word]});
         delete dict[word];
     }
 
@@ -54,7 +45,6 @@ function rankWordOccurrences(dict){
 
 function getTheMostCommonIssueTitle(titles){
     let best = {title: "", totalRating: 0};
-    console.log(titles);
     for(let title of titles){
         let totalRating = sumSimilarityRatings(stringSimilarity.findBestMatch(title, titles).ratings);
         if(totalRating > best.totalRating){
@@ -73,8 +63,7 @@ function sumSimilarityRatings(ratings){
     return sum;
 }
 
-function refactorTitles(issues){
-    console.log(issues);
+function extractTitles(issues){
     let titles = [];
     for(let issue of issues){
         titles.push(issue.title);
@@ -83,4 +72,4 @@ function refactorTitles(issues){
     return titles;
 }
 
-export {getAnalyzedData};
+export default getAnalyzedData;

@@ -6,7 +6,7 @@ import "./css/RepositoryList.css"
 function RepositoryList(props){
     let renderRepos = ()=>{
         return props.repos.map((e, i)=>{
-            return <Repository {...e} key={i} />
+            return <Repository onClick={props.onClick} {...e} key={i} />
         });
     }
 

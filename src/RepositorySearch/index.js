@@ -1,25 +1,47 @@
 import React from "react";
 import View from "./View";
-import getData from "./utils/getData";
+import getRepos from "./utils/getRepos";
+import getIssues from "./utils/getIssues";
+import getAnalysis from "./utils/analyze";
 
 export default class RepositorySearch extends React.Component{
     constructor(props){
         super(props);
 
-        this.pullData = this.pullData.bind(this);
+        this.pullRepos = this.pullRepos.bind(this);
+        this.pullIssues = this.pullIssues.bind(this);
     }
 
-    async pullData(query){
+    async pullRepos(query){
         try{
-            this.setState({loading: true, error: false, mounted: false});
-            let data = await getData(query, this.props.maxReposLength);
-            this.setState({loading: false, data, mounted: false});
+            this.setState({loading: true, error: false, mounted: false, analysis: null});
+            let repos = await getRepos(query, this.props.maxReposLength);
+            this.setState({loading: false, repos});
         }catch(rejected){
-            this.setState({loading: false, error: true, mounted: false});
+            this.setState({loading: false, error: "An error occured", repos: true});
+        }
+    }
+
+    async pullIssues(query){
+        try{
+            this.setState({loading: true, error: false, repos: null});
+            let issues = await getIssues(query);
+            let analysis;
+            if(issues.length > 0)
+                analysis = getAnalysis(issues);
+            else
+                throw new Error("none");
+            console.log(analysis);
+            this.setState({loading: false, analysis: analysis});
+        }catch(rejected){
+            let errorMessage = "An error occured";
+            if(rejected.message === "none")
+                errorMessage = "No issues found there!"
+            this.setState({loading: false, error: errorMessage, analysis: true});
         }
     }
 
     render(){
-        return <View pullData={this.pullData} {...this.state} />
+        return <View pullRepos={this.pullRepos} pullIssues={this.pullIssues} {...this.state} />
     }
 };

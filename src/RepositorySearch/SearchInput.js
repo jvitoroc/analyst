@@ -15,11 +15,11 @@ class SearchInput extends React.Component{
 
     onSubmit(e){
         e.preventDefault();
-        this.props.onSearch(this.state.value);
+        this.props.onSearch(extractValue(this.state.value));
     }
 
     handleChange(e){
-        this.setState({value: extractValue(e.target.value)});
+        this.setState({value: e.target.value});
     }
 
     render(){

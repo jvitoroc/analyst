@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default function getRepositories(query, amount){
+function getRepositories(query, amount){
     let url = `https://api.github.com/search/repositories?` +
                 `q=${query}&` +
                 `per_page=${amount}&` +
@@ -32,6 +32,9 @@ function extractRequired(response){
         }
         setTimeout(()=>{
             resolve(items);
-        }, 1000);
+        }, 500);
     });
 }
+
+export default getRepositories;
+export {checkStatus};

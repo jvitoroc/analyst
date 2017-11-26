@@ -1,31 +1,18 @@
 import React from 'react';
-import PropTypes from "prop-types";
-import Loading from "./Loading";
+import PropTypes from "prop-types"
 import Message from "./Message";
 import RepositoryList from "./RepositoryList";
 
-function RepositoriesContainer({data, loading, error, mounted}){
-
-    let render = ()=>{
-        if(mounted)
-            return <Message value={"Pick a repository!"} />
-        else if(error)
-            return <Message value={"An error occurred!"} />
-        else if(data.length !== 0)
-            return <RepositoryList repos={data} />
-        else
-            return <Message value={"No repositories found!"} />
-    };
-
-    return (
-        <div>
-            {loading
-                ? null
-                : render()
-            }
-            <Loading state={loading} />
-        </div>
-    );
+function RepositoriesContainer({repos, loading, error, mounted, onClick}){
+    console.log(mounted);
+    if(mounted)
+        return <Message value={"Pick a repository!"} />
+    else if(error)
+        return <Message value={error} />
+    else if(repos.length !== 0)
+        return <RepositoryList repos={repos} onClick={onClick}  />
+    else
+        return <Message value={"No repositories found!"} />
 }
 
 RepositoriesContainer.defaultProps = {
@@ -33,8 +20,8 @@ RepositoriesContainer.defaultProps = {
 }
 
 RepositoriesContainer.propTypes = {
-    data: PropTypes.array,
-    mounted: PropTypes.bool,
+    repos: PropTypes.array,
+    mounted: PropTypes.bool.isRequired,
     loading: PropTypes.bool,
     error: PropTypes.bool
 };
