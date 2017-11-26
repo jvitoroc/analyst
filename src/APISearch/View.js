@@ -1,22 +1,25 @@
 import React from "react";
 import SearchInput from "./SearchInput";
-import RepositoriesContainer from "./RepositoriesContainer";
+import RepositoriesContainer from "../RepositoriesContainer";
 import PropTypes from "prop-types";
 import IssuesAnalysis from "../IssuesAnalysis";
-import Loading from "./Loading";
+import Message from "./Message";
 
-function View({pullRepos, pullIssues, loading, repos, analysis, mounted, ...otherProps}){
+
+function View({pullRepos, pullIssues, loading, repos, analysis, mounted, error}){
     let render = ()=>{
-        if(repos || mounted){
+        if(mounted)
+            return <Message value={"Pick a repository!"} />
+        if(repos){
             return <RepositoriesContainer
-                    {...otherProps}
-                    mounted={mounted}
-                    repos={repos}
-                    onClick={pullIssues} />
+                    pullIssues={pullIssues}
+                    error={error}
+                    data={repos}
+                    mounted={mounted} />
 
         }else if(analysis){
             return <IssuesAnalysis
-                    {...otherProps}
+                    error={error}
                     analysis={analysis} />
         }
     };
@@ -26,10 +29,9 @@ function View({pullRepos, pullIssues, loading, repos, analysis, mounted, ...othe
             <SearchInput onSearch={pullRepos} />
             <div className="container">
                 {loading
-                    ? null
+                    ? <Message value={"Loading..."}/>
                     : render()
                 }
-                <Loading state={loading} />
             </div>
         </div>
     );

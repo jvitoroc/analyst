@@ -8,12 +8,15 @@ function getRepositories(query, amount){
 
     return axios.get(url)
     .then(checkStatus)
-    .then(extractRequired);
+    .then(extractRequired)
+    .catch((err)=>{
+        throw new Error('0');
+    });
 }
 
 function checkStatus(response){
     if(response.statusText !== "OK" || response.status !== 200){
-        throw Error(response.statusText);
+        throw new Error('0');
     }
     return response;
 }

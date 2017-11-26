@@ -4,6 +4,12 @@ import getRepos from "./utils/getRepos";
 import getIssues from "./utils/getIssues";
 import getAnalysis from "./utils/analyze";
 
+const ERROR_MESSAGES = {
+    'R404': 'No repositories found!',
+    'I404': 'No issues found!',
+    '0': 'A connection error occurred'
+}
+
 export default class RepositorySearch extends React.Component{
     constructor(props){
         super(props);
@@ -16,9 +22,11 @@ export default class RepositorySearch extends React.Component{
         try{
             this.setState({loading: true, error: false, mounted: false, analysis: null});
             let repos = await getRepos(query, this.props.maxReposLength);
+            if(repos.length === 0)
+                throw new Error('R404');
             this.setState({loading: false, repos});
-        }catch(rejected){
-            this.setState({loading: false, error: "An error occured", repos: true});
+        }catch(error){
+            this.setState({loading: false, error: ERROR_MESSAGES[error.message], repos: true});
         }
     }
 
@@ -30,14 +38,10 @@ export default class RepositorySearch extends React.Component{
             if(issues.length > 0)
                 analysis = getAnalysis(issues);
             else
-                throw new Error("none");
-            console.log(analysis);
+                throw new Error('I404');
             this.setState({loading: false, analysis: analysis});
-        }catch(rejected){
-            let errorMessage = "An error occured";
-            if(rejected.message === "none")
-                errorMessage = "No issues found there!"
-            this.setState({loading: false, error: errorMessage, analysis: true});
+        }catch(error){
+            this.setState({loading: false, error: ERROR_MESSAGES[error.message], analysis: true});
         }
     }
 

@@ -6,7 +6,10 @@ export default function getIssues(repoName){
 
     return axios.get(query)
         .then(checkStatus)
-        .then(extractRequired);
+        .then(extractRequired)
+        .catch((err)=>{
+            throw new Error('0');
+        });
 }
 
 function extractRequired(response){
