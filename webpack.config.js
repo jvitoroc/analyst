@@ -1,4 +1,5 @@
 const path = require('path');
+// const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
     entry: './src/index.js',
@@ -13,4 +14,8 @@ module.exports = {
             { test: /\.(png|svg|jpg|gif)$/, use: ['file-loader'] }
         ]
     }
+    // ,
+    // plugins: [
+    //     new OpenBrowserPlugin({ url: 'http://localhost:4000', ignoreErrors: true })
+    // ]
 };
