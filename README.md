@@ -8,7 +8,7 @@ npm run start
 ```
 ou
 ```
-npm init
+npm run init
 ```
 ou
 ```
