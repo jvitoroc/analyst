@@ -8,6 +8,10 @@ npm run start
 ```
 ou
 ```
+npm init
+```
+ou
+```
 Abrir /dist/index.html
 ```
 ## Tutorial
