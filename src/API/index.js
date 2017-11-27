@@ -3,6 +3,7 @@ import View from "./View";
 import getRepos from "./utils/getRepos";
 import getIssues from "./utils/getIssues";
 import getAnalysis from "./utils/analyze";
+import PropTypes from "prop-types";
 
 const ERROR_MESSAGES = {
     'R404': 'No repositories found!',
@@ -10,7 +11,7 @@ const ERROR_MESSAGES = {
     '0': 'A connection error occurred'
 }
 
-export default class RepositorySearch extends React.Component{
+class RepositorySearch extends React.Component{
     constructor(props){
         super(props);
 
@@ -49,3 +50,13 @@ export default class RepositorySearch extends React.Component{
         return <View pullRepos={this.pullRepos} pullIssues={this.pullIssues} {...this.state} />
     }
 };
+
+RepositorySearch.defaultProps = {
+    maxReposLength: 5
+}
+
+RepositorySearch.propTypes = {
+    maxReposLength: PropTypes.number
+}
+
+export default RepositorySearch;

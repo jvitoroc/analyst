@@ -3,7 +3,7 @@ import SearchInput from "./SearchInput";
 import RepositoriesContainer from "../RepositoriesContainer";
 import PropTypes from "prop-types";
 import IssuesAnalysis from "../IssuesAnalysis";
-import Message from "./Message";
+import Message from "../Message";
 
 
 function View({pullRepos, pullIssues, loading, repos, analysis, mounted, error}){
@@ -14,8 +14,7 @@ function View({pullRepos, pullIssues, loading, repos, analysis, mounted, error})
             return <RepositoriesContainer
                     pullIssues={pullIssues}
                     error={error}
-                    data={repos}
-                    mounted={mounted} />
+                    data={repos} />
 
         }else if(analysis){
             return <IssuesAnalysis
@@ -45,8 +44,8 @@ View.propTypes = {
     mounted: PropTypes.bool,
     loading: PropTypes.bool,
     error: PropTypes.oneOfType([
-        PropTypes.bool,
-        PropTypes.string
+        PropTypes.string,
+        PropTypes.bool
     ]),
     repos: PropTypes.array,
     pullData: PropTypes.func

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import extractValue from "./utils/extractValue";
-import "./css/SearchInput.css"
+import "./SearchInput.css"
 
 class SearchInput extends React.Component{
     constructor(props){

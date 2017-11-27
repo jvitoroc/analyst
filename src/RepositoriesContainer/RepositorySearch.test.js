@@ -1,6 +1,6 @@
 import axios from "axios";
 
-test("response returns 200", ()=>{
+test("Response returns status 200 if request is alright", ()=>{
     let url = `https://api.github.com/search/repositories?` +
                 `q=node&` +
                 `per_page=5&` +
@@ -13,7 +13,7 @@ test("response returns 200", ()=>{
 
 });
 
-test("response returns status OK", ()=>{
+test("Response returns statusText 'OK' if request is alright", ()=>{
     let url = `https://api.github.com/search/repositories?` +
                 `q=node&` +
                 `per_page=5&` +
@@ -26,7 +26,7 @@ test("response returns status OK", ()=>{
 
 });
 
-test("response returns status 422 if there is a typo", ()=>{
+test("Response returns status 422 if request has a typo", ()=>{
     let url = `https://api.github.com/search/repositories?` +
                 `Sq=node&` +
                 `per_page=5&` +
@@ -39,7 +39,7 @@ test("response returns status 422 if there is a typo", ()=>{
 
 });
 
-test("returns a error", ()=>{
+test("Response returns a callback with the Error object as the argument if request has a typo", ()=>{
     let url = `https://api.github.com/search/repositories?` +
                 `Sq=node&` +
                 `per_page=5&` +
