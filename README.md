@@ -6,12 +6,9 @@ Issues Analyst é um aplicação construída usando React. Ela gera dados basead
 npm install
 npm run start
 ```
+ou
 ```
-npm install
-npm run init
-```
-```
-Abrir __/dist/index.html__
+Abrir /dist/index.html
 ```
 ## Tutorial
 Abra a aplicação e pesquise um repositório e clique nele, logo em seguida é mostrado dados relacionados a *issues* daquele repositório.
